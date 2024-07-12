@@ -1,6 +1,9 @@
 package config
 
-import "github.com/ilyakaznacheev/cleanenv"
+import (
+	"github.com/ilyakaznacheev/cleanenv"
+	"os"
+)
 
 type Config struct {
 	env        string     `yaml:"env"`
@@ -13,10 +16,10 @@ type HttpServer struct {
 }
 
 func MustLoadConfig() *Config {
-	configPath := "./config/config.yaml"
+	configPath := os.Getenv("CONFIG_PATH")
 
 	if configPath == "" {
-		panic("config path is empty")
+		configPath = "./config/config.yaml"
 	}
 
 	var cfg Config

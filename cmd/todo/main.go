@@ -1,24 +1,28 @@
 package main
 
 import (
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 	"log"
+	"log/slog"
 	"net/http"
+	"os"
 	"task2/internal/config"
+	"task2/internal/router"
 )
 
 func main() {
 	cfg := config.MustLoadConfig()
 
+	logger := slog.New(slog.NewTextHandler(os.Stderr, nil))
+
 	log.Println(cfg)
 
-	r := chi.NewRouter()
-	r.Use(middleware.Logger)
-	r.Get("/healthCheck", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World!"))
-	})
+	logger.Info(cfg.HttpServer.Port)
+	logger.Info(cfg.HttpServer.Host)
 
-	http.ListenAndServe(cfg.HttpServer.Host+":"+cfg.HttpServer.Port, r)
+	r := router.Router()
 
+	err := http.ListenAndServe(":"+cfg.HttpServer.Port, r)
+	if err != nil {
+		logger.Error("Error starting server: %v", err)
+	}
 }
