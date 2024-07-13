@@ -11,10 +11,10 @@ func Router() http.Handler {
 
 	router.Route("/v1", func(r chi.Router) {
 		r.Get("/getTask", handlers.GetTask)
-		r.Get("/updateTask", handlers.GetTasks)
-		r.Post("/updateTask", handlers.UpdateTask)
+		r.Get("/getTasks", handlers.GetTasks)
+		r.Put("/updateTask", handlers.UpdateTask)
 		r.Post("/addTask", handlers.AddTask)
-		r.Delete("/getTasks", handlers.DeleteTask)
+		r.Delete("/deleteTask", handlers.DeleteTask)
 
 	})
 
