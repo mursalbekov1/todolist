@@ -15,7 +15,6 @@ func Router() http.Handler {
 		r.Put("/updateTask", handlers.UpdateTask)
 		r.Post("/addTask", handlers.AddTask)
 		r.Delete("/deleteTask", handlers.DeleteTask)
-
 	})
 
 	return router

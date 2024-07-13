@@ -13,6 +13,6 @@ RUN go build -o todo-list ./cmd/todo
 FROM alpine as runner
 
 COPY --from=builder /app/todo-list .
-COPY /config/config.yaml .
+COPY config/config.yaml ./config/config.yaml
 
 CMD ["./todo-list"]
